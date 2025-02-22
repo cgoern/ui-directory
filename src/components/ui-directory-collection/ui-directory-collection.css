@@ -1,7 +1,3 @@
 :host {
   display: block;
 }
-
-.mark:is(.active) {
-  font-weight: bold;
-}

@@ -25,11 +25,41 @@
         min-height: 100%;
         font-family: system-ui;
         margin: 0;
+        scroll-behavior: smooth;
+      }
+
+      h2 {
+        margin: 0;
       }
 
       ui-directory-collection:not(:defined),
       ui-directory-segment:not(:defined) {
         visibility: hidden;
+      }
+
+      ui-directory-collection::part(marks) {
+        display: flex;
+        gap: 1rem;
+      }
+
+      ui-directory-collection::part(mark) {
+        cursor: pointer;
+        color: oklch(50% 0 0);
+      }
+
+      ui-directory-collection::part(mark active) {
+        cursor: default;
+        color: oklch(0% 0 0);
+        text-decoration: underline;
+      }
+
+      ui-directory-collection::part(segments) {
+        display: grid;
+        grid-auto-columns: max(512px, 60vw);
+        grid-auto-flow: column;
+        gap: 1rem;
+        overflow: auto;
+        scrollbar-width: none;
       }
     </style>
   </head>
@@ -37,13 +67,43 @@
     <h1>UI Directory</h1>
     <ui-directory-collection>
       <ui-directory-segment mark="Segment 1">
-        <div>Recusandae quod aspernatur vitae ut adipisci ut.</div>
+        <h2>Iure id sunt inventore</h2>
+        <p>
+          Et enim harum sit. Praesentium dicta labore dolorem. Quia omnis dolor unde laborum. Optio
+          numquam aliquid laudantium id et. Aut id beatae aut et quo magni ut distinctio. Eveniet
+          vel vitae alias nesciunt enim quaerat.
+        </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 2" active>
-        <div>Recusandae quod aspernatur vitae ut adipisci ut.</div>
+      <ui-directory-segment mark="Segment 2">
+        <h2>Reiciendis architecto</h2>
+        <p>
+          Eum consequatur voluptates beatae similique eum quos aut. Consequatur ut enim et itaque
+          debitis. Ut voluptate id aut dolorum.
+        </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 3">
-        <div>Recusandae quod aspernatur vitae ut adipisci ut.</div>
+        <h2>Sunt consequatur suscipit</h2>
+        <p>
+          Vero est ducimus aliquam. Suscipit aut vel quas qui optio maxime reiciendis ut. Eos
+          occaecati possimus illo quia alias. Eum eligendi nesciunt eum sed qui consequatur
+          praesentium adipisci. Officiis itaque sed dolorem.
+        </p>
+      </ui-directory-segment>
+      <ui-directory-segment mark="Segment 4" active>
+        <h2>Exercitationem perferendis</h2>
+        <p>
+          Et sunt voluptas rerum deleniti expedita. Corrupti dignissimos ea corporis fuga accusamus.
+          Sunt perspiciatis itaque rerum earum dolor. Et consequatur dolor quaerat pariatur et
+          soluta repudiandae. Voluptas quae mollitia at suscipit cupiditate dolorem. Numquam placeat
+          cum ullam doloremque neque.
+        </p>
+      </ui-directory-segment>
+      <ui-directory-segment mark="Segment 5">
+        <h2>Consequatur corporis ut</h2>
+        <p>
+          Dignissimos labore recusandae ducimus. Aut iste voluptatem laboriosam. Dicta non itaque et
+          aut reiciendis atque. Aspernatur aut nobis ab. Ut voluptatem et optio sint corporis.
+        </p>
       </ui-directory-segment>
     </ui-directory-collection>
   </body>

@@ -1,7 +1,14 @@
 :host {
   display: block;
+  background-color: oklch(0% 0 0 / 5%);
+  padding: 1rem;
+  opacity: 0.25;
+  transition-duration: 1s;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity;
 }
 
 :host([active]) {
-  background-color: oklch(0% 0 0 / 10%);
+  opacity: 1;
 }

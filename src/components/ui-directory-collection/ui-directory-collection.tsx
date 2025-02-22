@@ -1,4 +1,4 @@
-import { Component, Host, Element, State, Watch, h } from '@stencil/core'
+import { Component, Host, Element, Prop, State, Watch, h } from '@stencil/core'
 
 @Component({
   tag: 'ui-directory-collection',
@@ -8,6 +8,9 @@ import { Component, Host, Element, State, Watch, h } from '@stencil/core'
 export class UiDirectoryCollection {
   private segments: HTMLUiDirectorySegmentElement[] = []
 
+  @Prop() alignX: ScrollIntoViewOptions['inline'] = 'center'
+  @Prop() alignY: ScrollIntoViewOptions['block'] = 'start'
+  @Prop() behavior: ScrollIntoViewOptions['behavior'] = 'smooth'
   @Element() element!: HTMLUiDirectoryCollectionElement
   @State() activeSegment: HTMLUiDirectorySegmentElement
 
@@ -21,12 +24,19 @@ export class UiDirectoryCollection {
         await segmentOld.setActive(false)
       }
       await segmentNew.setActive()
+      requestAnimationFrame(() => {
+        segmentNew.scrollIntoView({
+          behavior: segmentOld ? this.behavior : 'instant',
+          inline: this.alignX,
+          block: this.alignY,
+        })
+      })
     } catch (error) {
       console.error('Error setting segments:', error)
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.segments = Array.from(this.element.querySelectorAll('ui-directory-segment'))
 
     const activeSegment = this.segments.find((segment) => segment.active)
@@ -44,21 +54,30 @@ export class UiDirectoryCollection {
     }
   }
 
+  private getMarkAttributes(segment: HTMLUiDirectorySegmentElement) {
+    const isActive = segment === this.activeSegment
+
+    return {
+      class: `mark ${isActive ? 'active' : ''}`,
+      part: `mark ${isActive ? 'active' : ''}`,
+    }
+  }
+
   render() {
     return (
       <Host>
-        <div class="marks">
+        <div part="marks" class="marks">
           {this.segments.map((segment, index) => (
             <div
               key={index}
-              class={`mark ${segment === this.activeSegment ? 'active' : ''}`}
               onClick={() => this.handleMarkClick(segment)}
+              {...this.getMarkAttributes(segment)}
             >
               {segment.mark}
             </div>
           ))}
         </div>
-        <div class="segments">
+        <div part="segments" class="segments">
           <slot />
         </div>
       </Host>

@@ -20,6 +20,21 @@
 </ui-directory-collection>
 ```
 
+## Properties
+
+| Property   | Attribute  | Description | Type                                        | Default    |
+| ---------- | ---------- | ----------- | ------------------------------------------- | ---------- |
+| `alignX`   | `align-x`  |             | `"center" \| "end" \| "nearest" \| "start"` | `'center'` |
+| `alignY`   | `align-y`  |             | `"center" \| "end" \| "nearest" \| "start"` | `'start'`  |
+| `behavior` | `behavior` |             | `"auto" \| "instant" \| "smooth"`           | `'smooth'` |
+
+## Shadow Parts
+
+| Part         | Description |
+| ------------ | ----------- |
+| `"marks"`    |             |
+| `"segments"` |             |
+
 ---
 
 ©2025 cgoern

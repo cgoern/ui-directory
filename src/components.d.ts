@@ -7,6 +7,17 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface UiDirectoryCollection {
+        "alignX": ScrollIntoViewOptions['inline'];
+        /**
+         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
+         */
+        "align-x"?: ScrollIntoViewOptions['inline'];
+        "alignY": ScrollIntoViewOptions['block'];
+        /**
+         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
+         */
+        "align-y"?: ScrollIntoViewOptions['block'];
+        "behavior": ScrollIntoViewOptions['behavior'];
     }
     interface UiDirectorySegment {
         "active": boolean;
@@ -34,6 +45,17 @@ declare global {
 }
 declare namespace LocalJSX {
     interface UiDirectoryCollection {
+        "alignX"?: ScrollIntoViewOptions['inline'];
+        /**
+         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
+         */
+        "align-x"?: ScrollIntoViewOptions['inline'];
+        "alignY"?: ScrollIntoViewOptions['block'];
+        /**
+         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
+         */
+        "align-y"?: ScrollIntoViewOptions['block'];
+        "behavior"?: ScrollIntoViewOptions['behavior'];
     }
     interface UiDirectorySegment {
         "active"?: boolean;
