@@ -9,6 +9,9 @@ export namespace Components {
     interface UiDirectoryCollection {
     }
     interface UiDirectorySegment {
+        "active": boolean;
+        "mark": string;
+        "setActive": (active?: boolean) => Promise<void>;
     }
 }
 declare global {
@@ -33,6 +36,8 @@ declare namespace LocalJSX {
     interface UiDirectoryCollection {
     }
     interface UiDirectorySegment {
+        "active"?: boolean;
+        "mark": string;
     }
     interface IntrinsicElements {
         "ui-directory-collection": UiDirectoryCollection;

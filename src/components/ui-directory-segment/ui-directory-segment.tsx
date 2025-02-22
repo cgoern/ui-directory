@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core'
+import { Component, Host, Prop, Method, h } from '@stencil/core'
 
 @Component({
   tag: 'ui-directory-segment',
@@ -6,6 +6,14 @@ import { Component, Host, h } from '@stencil/core'
   shadow: true,
 })
 export class UiDirectorySegment {
+  @Prop() mark!: string
+  @Prop({ reflect: true, mutable: true }) active: boolean = false
+
+  @Method()
+  async setActive(active: boolean = true): Promise<void> {
+    this.active = active
+  }
+
   render() {
     return (
       <Host>

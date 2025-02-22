@@ -1,3 +1,7 @@
 :host {
   display: block;
 }
+
+:host([active]) {
+  background-color: oklch(0% 0 0 / 10%);
+}
