@@ -1,0 +1,57 @@
+{
+  "name": "@cgoern/ui-directory",
+  "version": "0.0.1",
+  "description": "UI Directory Components",
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/ui-directory/ui-directory.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/ui-directory/ui-directory.esm.js",
+      "require": "./dist/ui-directory/ui-directory.cjs.js"
+    },
+    "./ui-directory-segment": {
+      "import": "./dist/components/ui-directory-segment.js",
+      "types": "./dist/components/ui-directory-segment.d.ts"
+    },
+    "./ui-directory-collection": {
+      "import": "./dist/components/ui-directory-collection.js",
+      "types": "./dist/components/ui-directory-collection.d.ts"
+    },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs",
+      "types": "./loader/index.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cgoern/ui-directory.git"
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "preview": "stencil build --watch --serve",
+    "generate": "stencil generate",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@stencil/core": "^4.26.0",
+    "prettier": "^3.5.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 2,
+    "useTabs": false
+  }
+}

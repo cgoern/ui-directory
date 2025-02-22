@@ -1,0 +1,50 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI Directory Components</title>
+    <script type="module" src="/build/ui-directory.esm.js"></script>
+    <script nomodule src="/build/ui-directory.js"></script>
+    <style>
+      :root {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      * {
+        line-height: round(nearest, calc((16px / 1.6) + 1em), 2px);
+        letter-spacing: calc((12px - 1em) * 0.03);
+      }
+
+      html {
+        height: 100%;
+      }
+
+      body {
+        min-height: 100%;
+        font-family: system-ui;
+        margin: 0;
+      }
+
+      ui-directory-collection:not(:defined),
+      ui-directory-segment:not(:defined) {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>UI Directory</h1>
+    <ui-directory-collection>
+      <ui-directory-segment>
+        <div>Recusandae quod aspernatur vitae ut adipisci ut.</div>
+      </ui-directory-segment>
+      <ui-directory-segment>
+        <div>Recusandae quod aspernatur vitae ut adipisci ut.</div>
+      </ui-directory-segment>
+      <ui-directory-segment>
+        <div>Recusandae quod aspernatur vitae ut adipisci ut.</div>
+      </ui-directory-segment>
+    </ui-directory-collection>
+  </body>
+</html>
