@@ -1,5 +1,11 @@
 import { Component, Host, Element, Prop, State, Watch, h } from '@stencil/core'
 
+interface MarksObservable {
+  activated: HTMLDivElement
+  preceding: HTMLDivElement
+  following: HTMLDivElement
+}
+
 @Component({
   tag: 'ui-directory-collection',
   styleUrl: 'ui-directory-collection.css',
@@ -11,11 +17,7 @@ export class UiDirectoryCollection {
   private interacted: boolean = false
   private marks: HTMLDivElement[] = []
   private marksObserver: IntersectionObserver
-  private marksObservable: {
-    activated: HTMLDivElement
-    preceding: HTMLDivElement
-    following: HTMLDivElement
-  }
+  private marksObservable: MarksObservable
 
   @Element() element!: HTMLUiDirectoryCollectionElement
 
