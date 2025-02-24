@@ -23,13 +23,13 @@
 
 ## Methods
 
-### `setActive(active?: boolean) => Promise<void>`
+### `activate() => Promise<void>`
 
-#### Parameters
+#### Returns
 
-| Name     | Type      | Description |
-| -------- | --------- | ----------- |
-| `active` | `boolean` |             |
+Type: `Promise<void>`
+
+### `deactivate() => Promise<void>`
 
 #### Returns
 

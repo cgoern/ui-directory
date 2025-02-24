@@ -10,8 +10,13 @@ export class UiDirectorySegment {
   @Prop({ reflect: true, mutable: true }) active: boolean = false
 
   @Method()
-  async setActive(active: boolean = true): Promise<void> {
-    this.active = active
+  async activate(): Promise<void> {
+    this.active = true
+  }
+
+  @Method()
+  async deactivate(): Promise<void> {
+    this.active = false
   }
 
   render() {

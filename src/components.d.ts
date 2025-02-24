@@ -20,9 +20,10 @@ export namespace Components {
         "behavior": ScrollIntoViewOptions['behavior'];
     }
     interface UiDirectorySegment {
+        "activate": () => Promise<void>;
         "active": boolean;
+        "deactivate": () => Promise<void>;
         "mark": string;
-        "setActive": (active?: boolean) => Promise<void>;
     }
 }
 declare global {
