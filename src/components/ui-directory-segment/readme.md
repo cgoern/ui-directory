@@ -16,20 +16,24 @@
 
 ## Properties
 
-| Property            | Attribute | Description | Type      | Default     |
-| ------------------- | --------- | ----------- | --------- | ----------- |
-| `active`            | `active`  |             | `boolean` | `false`     |
-| `mark` _(required)_ | `mark`    |             | `string`  | `undefined` |
+| Property            | Attribute | Description                              | Type      | Default     |
+| ------------------- | --------- | ---------------------------------------- | --------- | ----------- |
+| `active`            | `active`  | Indicates whether the segment is active. | `boolean` | `false`     |
+| `mark` _(required)_ | `mark`    | A unique identifier for the segment.     | `string`  | `undefined` |
 
 ## Methods
 
 ### `activate() => Promise<void>`
+
+Activates the segment by setting the `active` property to true.
 
 #### Returns
 
 Type: `Promise<void>`
 
 ### `deactivate() => Promise<void>`
+
+Deactivates the segment by setting the `active` property to false.
 
 #### Returns
 

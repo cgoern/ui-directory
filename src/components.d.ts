@@ -7,22 +7,54 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface UiDirectoryCollection {
+        /**
+          * Horizontal alignment for scrolling into view.
+          * @type {ScrollIntoViewOptions['inline']}
+          * @default 'center'
+         */
         "alignX": ScrollIntoViewOptions['inline'];
         /**
          * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
          */
         "align-x"?: ScrollIntoViewOptions['inline'];
+        /**
+          * Vertical alignment for scrolling into view.
+          * @type {ScrollIntoViewOptions['block']}
+          * @default 'start'
+         */
         "alignY": ScrollIntoViewOptions['block'];
         /**
          * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
          */
         "align-y"?: ScrollIntoViewOptions['block'];
+        /**
+          * Scroll behavior for scrolling into view.
+          * @type {ScrollIntoViewOptions['behavior']}
+          * @default 'smooth'
+         */
         "behavior": ScrollIntoViewOptions['behavior'];
     }
     interface UiDirectorySegment {
+        /**
+          * Activates the segment by setting the `active` property to true.
+          * @returns
+         */
         "activate": () => Promise<void>;
+        /**
+          * Indicates whether the segment is active.
+          * @type {boolean}
+          * @default false
+         */
         "active": boolean;
+        /**
+          * Deactivates the segment by setting the `active` property to false.
+          * @returns
+         */
         "deactivate": () => Promise<void>;
+        /**
+          * A unique identifier for the segment.
+          * @type {string}
+         */
         "mark": string;
     }
 }
@@ -46,20 +78,44 @@ declare global {
 }
 declare namespace LocalJSX {
     interface UiDirectoryCollection {
+        /**
+          * Horizontal alignment for scrolling into view.
+          * @type {ScrollIntoViewOptions['inline']}
+          * @default 'center'
+         */
         "alignX"?: ScrollIntoViewOptions['inline'];
         /**
          * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
          */
         "align-x"?: ScrollIntoViewOptions['inline'];
+        /**
+          * Vertical alignment for scrolling into view.
+          * @type {ScrollIntoViewOptions['block']}
+          * @default 'start'
+         */
         "alignY"?: ScrollIntoViewOptions['block'];
         /**
          * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
          */
         "align-y"?: ScrollIntoViewOptions['block'];
+        /**
+          * Scroll behavior for scrolling into view.
+          * @type {ScrollIntoViewOptions['behavior']}
+          * @default 'smooth'
+         */
         "behavior"?: ScrollIntoViewOptions['behavior'];
     }
     interface UiDirectorySegment {
+        /**
+          * Indicates whether the segment is active.
+          * @type {boolean}
+          * @default false
+         */
         "active"?: boolean;
+        /**
+          * A unique identifier for the segment.
+          * @type {string}
+         */
         "mark": string;
     }
     interface IntrinsicElements {

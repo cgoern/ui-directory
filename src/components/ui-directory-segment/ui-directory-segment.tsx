@@ -6,14 +6,36 @@ import { Component, Host, Prop, Method, h } from '@stencil/core'
   shadow: true,
 })
 export class UiDirectorySegment {
+  /**
+   * A unique identifier for the segment.
+   *
+   * @type {string}
+   */
   @Prop() mark!: string
+
+  /**
+   * Indicates whether the segment is active.
+   *
+   * @type {boolean}
+   * @default false
+   */
   @Prop({ reflect: true, mutable: true }) active: boolean = false
 
+  /**
+   * Activates the segment by setting the `active` property to true.
+   *
+   * @returns {Promise<void>}
+   */
   @Method()
   async activate(): Promise<void> {
     this.active = true
   }
 
+  /**
+   * Deactivates the segment by setting the `active` property to false.
+   *
+   * @returns {Promise<void>}
+   */
   @Method()
   async deactivate(): Promise<void> {
     this.active = false

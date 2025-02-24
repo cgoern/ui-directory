@@ -19,14 +19,51 @@ export class UiDirectoryCollection {
   private marksObserver: IntersectionObserver
   private marksObservable: MarksObservable
 
+  /**
+   * The host element.
+   *
+   * @type {HTMLUiDirectoryCollectionElement}
+   */
   @Element() element!: HTMLUiDirectoryCollectionElement
 
+  /**
+   * Horizontal alignment for scrolling into view.
+   *
+   * @type {ScrollIntoViewOptions['inline']}
+   * @default 'center'
+   */
   @Prop() alignX: ScrollIntoViewOptions['inline'] = 'center'
+
+  /**
+   * Vertical alignment for scrolling into view.
+   *
+   * @type {ScrollIntoViewOptions['block']}
+   * @default 'start'
+   */
   @Prop() alignY: ScrollIntoViewOptions['block'] = 'start'
+
+  /**
+   * Scroll behavior for scrolling into view.
+   *
+   * @type {ScrollIntoViewOptions['behavior']}
+   * @default 'smooth'
+   */
   @Prop() behavior: ScrollIntoViewOptions['behavior'] = 'smooth'
 
+  /**
+   * The currently active segment.
+   *
+   * @type {HTMLUiDirectorySegmentElement}
+   */
   @State() activeSegment: HTMLUiDirectorySegmentElement
 
+  /**
+   * Watcher for changes to the active segment.
+   *
+   * @param {HTMLUiDirectorySegmentElement} segmentNew - The new active segment.
+   * @param {HTMLUiDirectorySegmentElement} segmentOld - The previous active segment.
+   * @returns {Promise<void>}
+   */
   @Watch('activeSegment')
   async watchActiveSegment(
     segmentNew: HTMLUiDirectorySegmentElement,
@@ -55,6 +92,9 @@ export class UiDirectoryCollection {
     }
   }
 
+  /**
+   * Lifecycle method that runs before the component is loaded.
+   */
   componentWillLoad() {
     this.segments = Array.from(this.element.querySelectorAll('ui-directory-segment'))
 
@@ -80,6 +120,9 @@ export class UiDirectoryCollection {
     )
   }
 
+  /**
+   * Lifecycle method that runs after the component has loaded.
+   */
   componentDidLoad() {
     const segmentActiveIndex = this.segments.indexOf(this.activeSegment)
 
@@ -87,6 +130,11 @@ export class UiDirectoryCollection {
     this.setMarksObservable(segmentActiveIndex)
   }
 
+  /**
+   * Sets the observable marks based on the active segment index.
+   *
+   * @param {number} index - The index of the active segment.
+   */
   private setMarksObservable(index: number): void {
     this.marksObservable = {
       activated: this.marks[index],
@@ -101,6 +149,9 @@ export class UiDirectoryCollection {
     })
   }
 
+  /**
+   * Lifecycle method that runs when the component is disconnected.
+   */
   disconnectedCallback() {
     this.marksObserver.disconnect()
 
@@ -109,6 +160,9 @@ export class UiDirectoryCollection {
     }
   }
 
+  /**
+   * Scrolls the marks into view.
+   */
   private scrollMarks(): void {
     this.marksObserver.disconnect()
 
@@ -125,6 +179,11 @@ export class UiDirectoryCollection {
     })
   }
 
+  /**
+   * Handles the click event on a mark.
+   *
+   * @param {HTMLUiDirectorySegmentElement} segment - The segment associated with the clicked mark.
+   */
   private handleMarkClick = (segment: HTMLUiDirectorySegmentElement): void => {
     if (this.activeSegment !== segment) {
       this.activeSegment = segment
@@ -135,6 +194,12 @@ export class UiDirectoryCollection {
     }
   }
 
+  /**
+   * Gets the attributes for a mark element.
+   *
+   * @param {HTMLUiDirectorySegmentElement} segment - The segment associated with the mark.
+   * @returns {Record<string, string>} The attributes for the mark element.
+   */
   private getMarkAttributes(segment: HTMLUiDirectorySegmentElement): Record<string, string> {
     const isActive = segment === this.activeSegment
 

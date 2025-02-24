@@ -22,11 +22,11 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type                                        | Default    |
-| ---------- | ---------- | ----------- | ------------------------------------------- | ---------- |
-| `alignX`   | `align-x`  |             | `"center" \| "end" \| "nearest" \| "start"` | `'center'` |
-| `alignY`   | `align-y`  |             | `"center" \| "end" \| "nearest" \| "start"` | `'start'`  |
-| `behavior` | `behavior` |             | `"auto" \| "instant" \| "smooth"`           | `'smooth'` |
+| Property   | Attribute  | Description                                   | Type                                        | Default    |
+| ---------- | ---------- | --------------------------------------------- | ------------------------------------------- | ---------- |
+| `alignX`   | `align-x`  | Horizontal alignment for scrolling into view. | `"center" \| "end" \| "nearest" \| "start"` | `'center'` |
+| `alignY`   | `align-y`  | Vertical alignment for scrolling into view.   | `"center" \| "end" \| "nearest" \| "start"` | `'start'`  |
+| `behavior` | `behavior` | Scroll behavior for scrolling into view.      | `"auto" \| "instant" \| "smooth"`           | `'smooth'` |
 
 ## Shadow Parts
 
