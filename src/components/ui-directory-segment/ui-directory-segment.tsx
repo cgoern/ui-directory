@@ -46,7 +46,7 @@ export class UiDirectorySegment {
    */
   render() {
     return (
-      <Host data-active={this.active}>
+      <Host class={this.active ? 'active' : ''}>
         <slot />
       </Host>
     )
