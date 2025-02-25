@@ -68,7 +68,7 @@ export class UiDirectoryCollection {
   async watchActiveSegment(
     segmentNew: HTMLUiDirectorySegmentElement,
     segmentOld: HTMLUiDirectorySegmentElement,
-  ) {
+  ): Promise<void> {
     try {
       const segmentNewIndex = this.segments.indexOf(segmentNew)
 
