@@ -155,7 +155,7 @@ export class UiDirectoryCollection {
   async componentDidLoad() {
     this.marks = Array.from(this.element.shadowRoot.querySelectorAll('.mark'))
     this.setMarksObservable()
-    this.resizeObserver.observe(this.marksContainer)
+    this.resizeObserver.observe(this.segmentsContainer)
 
     await this.segmentActive.activate()
   }

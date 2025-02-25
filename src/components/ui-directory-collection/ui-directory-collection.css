@@ -1,5 +1,5 @@
 :host {
-  display: block;
+  display: var(--UI-Directory-Collection-Display, block);
 }
 
 .segments {
