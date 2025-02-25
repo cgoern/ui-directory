@@ -1,6 +1,6 @@
 {
   "name": "@cgoern/ui-directory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "UI Directory Components",
   "license": "MIT",
   "main": "dist/index.cjs.js",
