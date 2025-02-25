@@ -11,13 +11,60 @@ interface MarksObservable {
   shadow: true,
 })
 export class UiDirectoryCollection {
+  /**
+   * An instance of the animation frame, used to manage and cancel animation frames.
+   *
+   * @type {number | null}
+   */
   private animationFrameInstance: number | null = null
+
+  /**
+   * An array of segments within the collection.
+   *
+   * @type {HTMLUiDirectorySegmentElement[]}
+   */
   private segments: HTMLUiDirectorySegmentElement[] = []
+
+  /**
+   * The container element for the segments.
+   *
+   * @type {HTMLDivElement}
+   */
   private segmentsContainer!: HTMLDivElement
+
+  /**
+   * An array of mark elements within the collection.
+   *
+   * @type {HTMLDivElement[]}
+   */
   private marks: HTMLDivElement[] = []
+
+  /**
+   * The observer for intersection of mark elements.
+   *
+   * @type {IntersectionObserver}
+   */
   private marksObserver: IntersectionObserver
+
+  /**
+   * The observable for mark elements.
+   *
+   * @type {MarksObservable}
+   */
   private marksObservable: MarksObservable
+
+  /**
+   * The container element for the marks.
+   *
+   * @type {HTMLDivElement}
+   */
   private marksContainer!: HTMLDivElement
+
+  /**
+   * The observer for resizing the collection.
+   *
+   * @type {ResizeObserver}
+   */
   private resizeObserver: ResizeObserver
 
   /**
@@ -63,14 +110,12 @@ export class UiDirectoryCollection {
     segmentOld: HTMLUiDirectorySegmentElement,
   ): Promise<void> {
     try {
-      const segmentNewIndex = this.segments.indexOf(segmentNew)
-
       if (segmentOld) {
         await segmentOld.deactivate()
         await segmentNew.activate()
 
         requestAnimationFrame(() => {
-          this.setMarksObservable(segmentNewIndex)
+          this.setMarksObservable()
 
           segmentNew.scrollIntoView({
             inline: this.alignX,
@@ -108,10 +153,8 @@ export class UiDirectoryCollection {
    * Lifecycle method that runs after the component has loaded.
    */
   async componentDidLoad() {
-    const segmentActiveIndex = this.segments.indexOf(this.segmentActive)
-
     this.marks = Array.from(this.element.shadowRoot.querySelectorAll('.mark'))
-    this.setMarksObservable(segmentActiveIndex)
+    this.setMarksObservable()
     this.resizeObserver.observe(this.marksContainer)
 
     await this.segmentActive.activate()
@@ -122,6 +165,7 @@ export class UiDirectoryCollection {
    */
   disconnectedCallback() {
     this.marksObserver.disconnect()
+    this.resizeObserver.disconnect()
 
     if (this.animationFrameInstance !== null) {
       cancelAnimationFrame(this.animationFrameInstance)
@@ -130,13 +174,13 @@ export class UiDirectoryCollection {
 
   /**
    * Sets the observable marks based on the active segment index.
-   *
-   * @param {number} indexActive - The index of the active segment.
    */
-  private setMarksObservable(indexActive: number): void {
+  private setMarksObservable(): void {
+    const segmentActiveIndex = this.segments.indexOf(this.segmentActive)
+
     this.marksObservable = {
-      preceding: this.marks[indexActive - 1],
-      following: this.marks[indexActive + 1],
+      preceding: this.marks[segmentActiveIndex - 1],
+      following: this.marks[segmentActiveIndex + 1],
     }
 
     this.observeMarks()
@@ -210,6 +254,9 @@ export class UiDirectoryCollection {
     }
   }
 
+  /**
+   * Renders the component.
+   */
   render() {
     return (
       <Host>

@@ -42,19 +42,11 @@ export class UiDirectorySegment {
   }
 
   /**
-   * Gets the attributes for this element.
-   *
-   * @returns {Record<string, string>} The attributes for the mark element.
+   * Renders the component.
    */
-  private getAttributes(): Record<string, string> {
-    return {
-      active: this.active ? '' : null,
-    }
-  }
-
   render() {
     return (
-      <Host {...this.getAttributes()}>
+      <Host data-active={this.active}>
         <slot />
       </Host>
     )
