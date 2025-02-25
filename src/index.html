@@ -41,12 +41,19 @@
         visibility: hidden;
       }
 
+      /* ui-directory-collection {
+        display: grid;
+        grid-template: auto / 256px 1fr;
+      } */
+
       ui-directory-collection::part(marks) {
         display: flex;
+        flex-direction: column;
         flex-wrap: nowrap;
         white-space: nowrap;
         overflow: hidden;
         gap: 1rem;
+        /* width: 256px; */
       }
 
       ui-directory-collection::part(mark) {
@@ -67,6 +74,7 @@
         gap: 1rem;
         overflow: hidden;
         scrollbar-width: none;
+        max-width: 1024px;
       }
 
       ui-directory-segment {
@@ -78,7 +86,7 @@
         padding: 1rem;
       }
 
-      ui-directory-segment[data-active] {
+      ui-directory-segment.active {
         background-color: oklch(98% 0 0);
         opacity: 1;
       }
@@ -91,7 +99,7 @@
   </head>
   <body>
     <h1>UI Directory</h1>
-    <ui-directory-collection>
+    <ui-directory-collection align-x="center">
       <ui-directory-segment mark="Segment 1">
         <div class="header"></div>
         <h2>Iure id sunt inventore</h2>

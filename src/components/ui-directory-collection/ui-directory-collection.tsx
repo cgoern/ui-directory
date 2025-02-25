@@ -229,12 +229,30 @@ export class UiDirectoryCollection {
   private handleResize = (): void => {
     const segmentActiveRect = this.segmentActive.getBoundingClientRect()
     const segmentsContainerRect = this.segmentsContainer.getBoundingClientRect()
-    const offset = segmentActiveRect.left - segmentsContainerRect.left
-    const scrollAmount = offset - (segmentsContainerRect.width / 2 - segmentActiveRect.width / 2)
+
+    let scrollAmount = 0
+
+    switch (this.alignX) {
+      case 'start':
+        scrollAmount = segmentActiveRect.left - segmentsContainerRect.left
+        break
+      case 'center':
+        scrollAmount =
+          segmentActiveRect.left -
+          segmentsContainerRect.left -
+          (segmentsContainerRect.width / 2 - segmentActiveRect.width / 2)
+        break
+      case 'end':
+        scrollAmount =
+          segmentActiveRect.left -
+          segmentsContainerRect.left -
+          (segmentsContainerRect.width - segmentActiveRect.width)
+        break
+    }
 
     this.observeMarks()
-    this.segmentsContainer.scrollBy({
-      left: scrollAmount,
+    this.segmentsContainer.scrollTo({
+      left: this.segmentsContainer.scrollLeft + scrollAmount,
       behavior: 'instant',
     })
   }
@@ -249,7 +267,7 @@ export class UiDirectoryCollection {
     const isActive = segment === this.segmentActive
 
     return {
-      class: `mark ${isActive ? 'active' : ''}`,
+      class: 'mark',
       part: `mark ${isActive ? 'active' : ''}`,
     }
   }
