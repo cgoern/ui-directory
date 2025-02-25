@@ -1,4 +1,4 @@
-import { Component, Host, Prop, Method, h } from '@stencil/core'
+import { Component, Host, Prop, State, Method, h } from '@stencil/core'
 
 @Component({
   tag: 'ui-directory-segment',
@@ -19,7 +19,7 @@ export class UiDirectorySegment {
    * @type {boolean}
    * @default false
    */
-  @Prop({ reflect: true, mutable: true }) active: boolean = false
+  @State() active: boolean = false
 
   /**
    * Activates the segment by setting the `active` property to true.
@@ -41,9 +41,20 @@ export class UiDirectorySegment {
     this.active = false
   }
 
+  /**
+   * Gets the attributes for this element.
+   *
+   * @returns {Record<string, string>} The attributes for the mark element.
+   */
+  private getAttributes(): Record<string, string> {
+    return {
+      active: this.active ? '' : null,
+    }
+  }
+
   render() {
     return (
-      <Host>
+      <Host {...this.getAttributes()}>
         <slot />
       </Host>
     )

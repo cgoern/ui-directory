@@ -1,7 +1,6 @@
 import { Component, Host, Element, Prop, State, Watch, h } from '@stencil/core'
 
 interface MarksObservable {
-  activated: HTMLDivElement
   preceding: HTMLDivElement
   following: HTMLDivElement
 }
@@ -14,10 +13,10 @@ interface MarksObservable {
 export class UiDirectoryCollection {
   private animationFrameInstance: number | null = null
   private segments: HTMLUiDirectorySegmentElement[] = []
-  private interacted: boolean = false
   private marks: HTMLDivElement[] = []
   private marksObserver: IntersectionObserver
   private marksObservable: MarksObservable
+  private marksContainer!: HTMLDivElement
 
   /**
    * The host element.
@@ -38,17 +37,9 @@ export class UiDirectoryCollection {
    * Vertical alignment for scrolling into view.
    *
    * @type {ScrollIntoViewOptions['block']}
-   * @default 'start'
+   * @default 'center'
    */
-  @Prop() alignY: ScrollIntoViewOptions['block'] = 'start'
-
-  /**
-   * Scroll behavior for scrolling into view.
-   *
-   * @type {ScrollIntoViewOptions['behavior']}
-   * @default 'smooth'
-   */
-  @Prop() behavior: ScrollIntoViewOptions['behavior'] = 'smooth'
+  @Prop() alignY: ScrollIntoViewOptions['block'] = 'center'
 
   /**
    * The currently active segment.
@@ -74,19 +65,17 @@ export class UiDirectoryCollection {
 
       if (segmentOld) {
         await segmentOld.deactivate()
-      }
+        await segmentNew.activate()
 
-      await segmentNew.activate()
+        requestAnimationFrame(() => {
+          this.setMarksObservable(segmentNewIndex)
 
-      requestAnimationFrame(() => {
-        this.setMarksObservable(segmentNewIndex)
-
-        segmentNew.scrollIntoView({
-          behavior: this.interacted ? this.behavior : 'instant',
-          inline: this.alignX,
-          block: this.alignY,
+          segmentNew.scrollIntoView({
+            inline: this.alignX,
+            block: this.alignY,
+          })
         })
-      })
+      }
     } catch (error) {
       console.error('Error setting segments:', error)
     }
@@ -97,15 +86,7 @@ export class UiDirectoryCollection {
    */
   componentWillLoad() {
     this.segments = Array.from(this.element.querySelectorAll('ui-directory-segment'))
-
-    const activeSegment = this.segments.find((segment) => segment.active)
-
-    if (activeSegment) {
-      this.activeSegment = activeSegment
-    } else if (this.segments.length > 0) {
-      this.activeSegment = this.segments[0]
-    }
-
+    this.activeSegment = this.segments[0]
     this.marksObserver = new IntersectionObserver(
       (elements) => {
         elements.forEach((element) => {
@@ -123,23 +104,23 @@ export class UiDirectoryCollection {
   /**
    * Lifecycle method that runs after the component has loaded.
    */
-  componentDidLoad() {
+  async componentDidLoad() {
     const segmentActiveIndex = this.segments.indexOf(this.activeSegment)
 
     this.marks = Array.from(this.element.shadowRoot.querySelectorAll('.mark'))
     this.setMarksObservable(segmentActiveIndex)
+    await this.activeSegment.activate()
   }
 
   /**
    * Sets the observable marks based on the active segment index.
    *
-   * @param {number} index - The index of the active segment.
+   * @param {number} indexActive - The index of the active segment.
    */
-  private setMarksObservable(index: number): void {
+  private setMarksObservable(indexActive: number): void {
     this.marksObservable = {
-      activated: this.marks[index],
-      preceding: this.marks[index - 1],
-      following: this.marks[index + 1],
+      preceding: this.marks[indexActive - 1],
+      following: this.marks[indexActive + 1],
     }
 
     Object.values(this.marksObservable).forEach((mark) => {
@@ -161,20 +142,16 @@ export class UiDirectoryCollection {
   }
 
   /**
-   * Scrolls the marks into view.
+   * Scrolls the marks container to the preceding mark.
    */
   private scrollMarks(): void {
     this.marksObserver.disconnect()
 
     requestAnimationFrame(() => {
-      const { activated } = this.marksObservable
+      const { preceding } = this.marksObservable
 
-      if (activated) {
-        activated.scrollIntoView({
-          behavior: this.interacted ? this.behavior : 'instant',
-          inline: this.alignX,
-          block: this.alignY,
-        })
+      if (preceding) {
+        this.marksContainer.scrollLeft = preceding.offsetLeft
       }
     })
   }
@@ -187,10 +164,6 @@ export class UiDirectoryCollection {
   private handleMarkClick = (segment: HTMLUiDirectorySegmentElement): void => {
     if (this.activeSegment !== segment) {
       this.activeSegment = segment
-
-      if (!this.interacted) {
-        this.interacted = true
-      }
     }
   }
 
@@ -212,7 +185,7 @@ export class UiDirectoryCollection {
   render() {
     return (
       <Host>
-        <div part="marks" class="marks">
+        <div part="marks" class="marks" ref={(element) => (this.marksContainer = element)}>
           {this.segments.map((segment, index) => (
             <div
               key={index}

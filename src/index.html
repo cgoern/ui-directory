@@ -19,15 +19,17 @@
 
       html {
         height: 100%;
+        scroll-behavior: smooth;
       }
 
       body {
         min-height: 100%;
         font-family: system-ui;
         margin: 0;
-        /* padding: 1rem; */
-        scroll-behavior: smooth;
-        box-sizing: border-box;
+      }
+
+      h1 {
+        margin: 0 0 1rem;
       }
 
       h2 {
@@ -60,11 +62,30 @@
 
       ui-directory-collection::part(segments) {
         display: grid;
-        grid-auto-columns: max(512px, 60vw);
+        grid-auto-columns: min(100%, 800px);
         grid-auto-flow: column;
         gap: 1rem;
         overflow: hidden;
         scrollbar-width: none;
+      }
+
+      ui-directory-segment {
+        background-color: oklch(98% 0 0 / 0%);
+        opacity: 0.25;
+        transition-property: background-color, opacity;
+        transition-duration: 0.5s;
+        transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+        padding: 1rem;
+      }
+
+      ui-directory-segment[active] {
+        background-color: oklch(98% 0 0);
+        opacity: 1;
+      }
+
+      .header {
+        height: 200px;
+        background: oklch(90% 0 0);
       }
     </style>
   </head>
@@ -72,6 +93,7 @@
     <h1>UI Directory</h1>
     <ui-directory-collection>
       <ui-directory-segment mark="Segment 1">
+        <div class="header"></div>
         <h2>Iure id sunt inventore</h2>
         <p>
           Et enim harum sit. Praesentium dicta labore dolorem. Quia omnis dolor unde laborum. Optio
@@ -80,6 +102,7 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 2">
+        <div class="header"></div>
         <h2>Reiciendis architecto</h2>
         <p>
           Eum consequatur voluptates beatae similique eum quos aut. Consequatur ut enim et itaque
@@ -87,6 +110,7 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 3">
+        <div class="header"></div>
         <h2>Sunt consequatur suscipit</h2>
         <p>
           Vero est ducimus aliquam. Suscipit aut vel quas qui optio maxime reiciendis ut. Eos
@@ -95,6 +119,7 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 4">
+        <div class="header"></div>
         <h2>Exercitationem perferendis</h2>
         <p>
           Et sunt voluptas rerum deleniti expedita. Corrupti dignissimos ea corporis fuga accusamus.
@@ -104,13 +129,15 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 5">
+        <div class="header"></div>
         <h2>Consequatur corporis ut</h2>
         <p>
           Dignissimos labore recusandae ducimus. Aut iste voluptatem laboriosam. Dicta non itaque et
           aut reiciendis atque. Aspernatur aut nobis ab. Ut voluptatem et optio sint corporis.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 6" active>
+      <ui-directory-segment mark="Segment 6">
+        <div class="header"></div>
         <h2>Iure id sunt inventore</h2>
         <p>
           Et enim harum sit. Praesentium dicta labore dolorem. Quia omnis dolor unde laborum. Optio
@@ -119,6 +146,7 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 7">
+        <div class="header"></div>
         <h2>Reiciendis architecto</h2>
         <p>
           Eum consequatur voluptates beatae similique eum quos aut. Consequatur ut enim et itaque
@@ -126,6 +154,7 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 8">
+        <div class="header"></div>
         <h2>Sunt consequatur suscipit</h2>
         <p>
           Vero est ducimus aliquam. Suscipit aut vel quas qui optio maxime reiciendis ut. Eos
@@ -134,6 +163,7 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 9">
+        <div class="header"></div>
         <h2>Exercitationem perferendis</h2>
         <p>
           Et sunt voluptas rerum deleniti expedita. Corrupti dignissimos ea corporis fuga accusamus.
@@ -143,6 +173,7 @@
         </p>
       </ui-directory-segment>
       <ui-directory-segment mark="Segment 10">
+        <div class="header"></div>
         <h2>Consequatur corporis ut</h2>
         <p>
           Dignissimos labore recusandae ducimus. Aut iste voluptatem laboriosam. Dicta non itaque et

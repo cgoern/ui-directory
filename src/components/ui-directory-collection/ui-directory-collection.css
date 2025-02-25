@@ -1,3 +1,11 @@
 :host {
   display: block;
 }
+
+.segments {
+  scroll-behavior: var(--UI-Directory-Collection-ScrollBehavior, smooth);
+}
+
+.marks {
+  scroll-behavior: var(--UI-Directory-Collection-ScrollBehavior, smooth);
+}

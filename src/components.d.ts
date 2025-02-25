@@ -20,19 +20,13 @@ export namespace Components {
         /**
           * Vertical alignment for scrolling into view.
           * @type {ScrollIntoViewOptions['block']}
-          * @default 'start'
+          * @default 'center'
          */
         "alignY": ScrollIntoViewOptions['block'];
         /**
          * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
          */
         "align-y"?: ScrollIntoViewOptions['block'];
-        /**
-          * Scroll behavior for scrolling into view.
-          * @type {ScrollIntoViewOptions['behavior']}
-          * @default 'smooth'
-         */
-        "behavior": ScrollIntoViewOptions['behavior'];
     }
     interface UiDirectorySegment {
         /**
@@ -40,12 +34,6 @@ export namespace Components {
           * @returns
          */
         "activate": () => Promise<void>;
-        /**
-          * Indicates whether the segment is active.
-          * @type {boolean}
-          * @default false
-         */
-        "active": boolean;
         /**
           * Deactivates the segment by setting the `active` property to false.
           * @returns
@@ -91,27 +79,15 @@ declare namespace LocalJSX {
         /**
           * Vertical alignment for scrolling into view.
           * @type {ScrollIntoViewOptions['block']}
-          * @default 'start'
+          * @default 'center'
          */
         "alignY"?: ScrollIntoViewOptions['block'];
         /**
          * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
          */
         "align-y"?: ScrollIntoViewOptions['block'];
-        /**
-          * Scroll behavior for scrolling into view.
-          * @type {ScrollIntoViewOptions['behavior']}
-          * @default 'smooth'
-         */
-        "behavior"?: ScrollIntoViewOptions['behavior'];
     }
     interface UiDirectorySegment {
-        /**
-          * Indicates whether the segment is active.
-          * @type {boolean}
-          * @default false
-         */
-        "active"?: boolean;
         /**
           * A unique identifier for the segment.
           * @type {string}

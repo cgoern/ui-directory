@@ -16,10 +16,9 @@
 
 ## Properties
 
-| Property            | Attribute | Description                              | Type      | Default     |
-| ------------------- | --------- | ---------------------------------------- | --------- | ----------- |
-| `active`            | `active`  | Indicates whether the segment is active. | `boolean` | `false`     |
-| `mark` _(required)_ | `mark`    | A unique identifier for the segment.     | `string`  | `undefined` |
+| Property            | Attribute | Description                          | Type     | Default     |
+| ------------------- | --------- | ------------------------------------ | -------- | ----------- |
+| `mark` _(required)_ | `mark`    | A unique identifier for the segment. | `string` | `undefined` |
 
 ## Methods
 
