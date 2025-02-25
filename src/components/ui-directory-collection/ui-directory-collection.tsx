@@ -13,10 +13,12 @@ interface MarksObservable {
 export class UiDirectoryCollection {
   private animationFrameInstance: number | null = null
   private segments: HTMLUiDirectorySegmentElement[] = []
+  private segmentsContainer!: HTMLDivElement
   private marks: HTMLDivElement[] = []
   private marksObserver: IntersectionObserver
   private marksObservable: MarksObservable
   private marksContainer!: HTMLDivElement
+  private resizeObserver: ResizeObserver
 
   /**
    * The host element.
@@ -46,7 +48,7 @@ export class UiDirectoryCollection {
    *
    * @type {HTMLUiDirectorySegmentElement}
    */
-  @State() activeSegment: HTMLUiDirectorySegmentElement
+  @State() segmentActive: HTMLUiDirectorySegmentElement
 
   /**
    * Watcher for changes to the active segment.
@@ -55,8 +57,8 @@ export class UiDirectoryCollection {
    * @param {HTMLUiDirectorySegmentElement} segmentOld - The previous active segment.
    * @returns {Promise<void>}
    */
-  @Watch('activeSegment')
-  async watchActiveSegment(
+  @Watch('segmentActive')
+  async watchSegmentActive(
     segmentNew: HTMLUiDirectorySegmentElement,
     segmentOld: HTMLUiDirectorySegmentElement,
   ): Promise<void> {
@@ -86,7 +88,8 @@ export class UiDirectoryCollection {
    */
   componentWillLoad() {
     this.segments = Array.from(this.element.querySelectorAll('ui-directory-segment'))
-    this.activeSegment = this.segments[0]
+    this.segmentActive = this.segments[0]
+    this.resizeObserver = new ResizeObserver(this.handleResize)
     this.marksObserver = new IntersectionObserver(
       (elements) => {
         elements.forEach((element) => {
@@ -105,11 +108,24 @@ export class UiDirectoryCollection {
    * Lifecycle method that runs after the component has loaded.
    */
   async componentDidLoad() {
-    const segmentActiveIndex = this.segments.indexOf(this.activeSegment)
+    const segmentActiveIndex = this.segments.indexOf(this.segmentActive)
 
     this.marks = Array.from(this.element.shadowRoot.querySelectorAll('.mark'))
     this.setMarksObservable(segmentActiveIndex)
-    await this.activeSegment.activate()
+    this.resizeObserver.observe(this.marksContainer)
+
+    await this.segmentActive.activate()
+  }
+
+  /**
+   * Lifecycle method that runs when the component is disconnected.
+   */
+  disconnectedCallback() {
+    this.marksObserver.disconnect()
+
+    if (this.animationFrameInstance !== null) {
+      cancelAnimationFrame(this.animationFrameInstance)
+    }
   }
 
   /**
@@ -123,22 +139,18 @@ export class UiDirectoryCollection {
       following: this.marks[indexActive + 1],
     }
 
+    this.observeMarks()
+  }
+
+  /**
+   * Observes the marks for intersection changes.
+   */
+  private observeMarks(): void {
     Object.values(this.marksObservable).forEach((mark) => {
       if (mark) {
         this.marksObserver.observe(mark)
       }
     })
-  }
-
-  /**
-   * Lifecycle method that runs when the component is disconnected.
-   */
-  disconnectedCallback() {
-    this.marksObserver.disconnect()
-
-    if (this.animationFrameInstance !== null) {
-      cancelAnimationFrame(this.animationFrameInstance)
-    }
   }
 
   /**
@@ -162,9 +174,25 @@ export class UiDirectoryCollection {
    * @param {HTMLUiDirectorySegmentElement} segment - The segment associated with the clicked mark.
    */
   private handleMarkClick = (segment: HTMLUiDirectorySegmentElement): void => {
-    if (this.activeSegment !== segment) {
-      this.activeSegment = segment
+    if (this.segmentActive !== segment) {
+      this.segmentActive = segment
     }
+  }
+
+  /**
+   * Handles the resize event and adjusts the scroll position of the segments container.
+   */
+  private handleResize = (): void => {
+    const segmentActiveRect = this.segmentActive.getBoundingClientRect()
+    const segmentsContainerRect = this.segmentsContainer.getBoundingClientRect()
+    const offset = segmentActiveRect.left - segmentsContainerRect.left
+    const scrollAmount = offset - (segmentsContainerRect.width / 2 - segmentActiveRect.width / 2)
+
+    this.observeMarks()
+    this.segmentsContainer.scrollBy({
+      left: scrollAmount,
+      behavior: 'instant',
+    })
   }
 
   /**
@@ -174,7 +202,7 @@ export class UiDirectoryCollection {
    * @returns {Record<string, string>} The attributes for the mark element.
    */
   private getMarkAttributes(segment: HTMLUiDirectorySegmentElement): Record<string, string> {
-    const isActive = segment === this.activeSegment
+    const isActive = segment === this.segmentActive
 
     return {
       class: `mark ${isActive ? 'active' : ''}`,
@@ -196,7 +224,7 @@ export class UiDirectoryCollection {
             </div>
           ))}
         </div>
-        <div part="segments" class="segments">
+        <div part="segments" class="segments" ref={(element) => (this.segmentsContainer = element)}>
           <slot />
         </div>
       </Host>
