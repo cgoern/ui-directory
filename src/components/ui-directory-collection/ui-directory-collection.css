@@ -9,3 +9,7 @@
 .marks {
   scroll-behavior: var(--UI-Directory-Collection-ScrollBehavior, smooth);
 }
+
+.label {
+  display: var(--UI-Directory-Collection-Label-Display, block);
+}

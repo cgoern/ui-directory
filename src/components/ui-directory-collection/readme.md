@@ -31,6 +31,7 @@
 
 | Part         | Description |
 | ------------ | ----------- |
+| `"label"`    |             |
 | `"marks"`    |             |
 | `"segments"` |             |
 

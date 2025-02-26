@@ -287,7 +287,9 @@ export class UiDirectoryCollection {
               onClick={() => this.handleMarkClick(segment)}
               {...this.getMarkAttributes(segment)}
             >
-              {segment.mark}
+              <span part="label" class="label">
+                {segment.mark}
+              </span>
             </div>
           ))}
         </div>
