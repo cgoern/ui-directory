@@ -265,10 +265,12 @@ export class UiDirectoryCollection {
    */
   private getMarkAttributes(segment: HTMLUiDirectorySegmentElement): Record<string, string> {
     const isActive = segment === this.segmentActive
+    const isFirst = this.segments.indexOf(segment) === 0
+    const isLast = this.segments.indexOf(segment) === this.segments.length - 1
 
     return {
       class: 'mark',
-      part: `mark ${isActive ? 'active' : ''}`,
+      part: `mark ${isActive ? 'active' : ''} ${isFirst ? 'first' : ''} ${isLast ? 'last' : ''}`,
     }
   }
 
