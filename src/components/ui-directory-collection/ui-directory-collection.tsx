@@ -65,7 +65,7 @@ export class UiDirectoryCollection {
    *
    * @type {ResizeObserver}
    */
-  private resizeObserver: ResizeObserver
+  private segmentsContainerObserver: ResizeObserver
 
   /**
    * The host element.
@@ -134,7 +134,7 @@ export class UiDirectoryCollection {
   componentWillLoad() {
     this.segments = Array.from(this.element.querySelectorAll('ui-directory-segment'))
     this.segmentActive = this.segments[0]
-    this.resizeObserver = new ResizeObserver(this.handleResize)
+    this.segmentsContainerObserver = new ResizeObserver(this.handleResize)
     this.marksObserver = new IntersectionObserver(
       (elements) => {
         elements.forEach((element) => {
@@ -155,7 +155,7 @@ export class UiDirectoryCollection {
   async componentDidLoad() {
     this.marks = Array.from(this.element.shadowRoot.querySelectorAll('.mark'))
     this.setMarksObservable()
-    this.resizeObserver.observe(this.segmentsContainer)
+    this.segmentsContainerObserver.observe(this.segmentsContainer)
 
     await this.segmentActive.activate()
   }
@@ -165,7 +165,7 @@ export class UiDirectoryCollection {
    */
   disconnectedCallback() {
     this.marksObserver.disconnect()
-    this.resizeObserver.disconnect()
+    this.segmentsContainerObserver.disconnect()
 
     if (this.animationFrameInstance !== null) {
       cancelAnimationFrame(this.animationFrameInstance)
