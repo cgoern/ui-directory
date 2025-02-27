@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { UiDirectoryCollectionChangeEventData } from "./types";
+export { UiDirectoryCollectionChangeEventData } from "./types";
 export namespace Components {
     interface UiDirectoryCollection {
         /**
@@ -35,10 +37,21 @@ export namespace Components {
          */
         "activate": () => Promise<void>;
         /**
+          * Data to be used within the expansion panel.
+          * @type {string | null}
+          * @default null
+         */
+        "data": string | null;
+        /**
           * Deactivates the segment by setting the `active` property to false.
           * @returns
          */
         "deactivate": () => Promise<void>;
+        /**
+          * Retrieves the parsed data associated with this segment.
+          * @returns A promise that resolves to the parsed data or null
+         */
+        "getData": () => Promise<unknown | null>;
         /**
           * A unique identifier for the segment.
           * @type {string}
@@ -46,8 +59,23 @@ export namespace Components {
         "mark": string;
     }
 }
+export interface UiDirectoryCollectionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiDirectoryCollectionElement;
+}
 declare global {
+    interface HTMLUiDirectoryCollectionElementEventMap {
+        "uiDirectoryCollectionSegmentChange": UiDirectoryCollectionChangeEventData;
+    }
     interface HTMLUiDirectoryCollectionElement extends Components.UiDirectoryCollection, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiDirectoryCollectionElementEventMap>(type: K, listener: (this: HTMLUiDirectoryCollectionElement, ev: UiDirectoryCollectionCustomEvent<HTMLUiDirectoryCollectionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiDirectoryCollectionElementEventMap>(type: K, listener: (this: HTMLUiDirectoryCollectionElement, ev: UiDirectoryCollectionCustomEvent<HTMLUiDirectoryCollectionElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLUiDirectoryCollectionElement: {
         prototype: HTMLUiDirectoryCollectionElement;
@@ -86,8 +114,19 @@ declare namespace LocalJSX {
          * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
          */
         "align-y"?: ScrollIntoViewOptions['block'];
+        /**
+          * Event emitted when the active segment changes.
+          * @type {UiDirectoryCollectionChangeEventData}
+         */
+        "onUiDirectoryCollectionSegmentChange"?: (event: UiDirectoryCollectionCustomEvent<UiDirectoryCollectionChangeEventData>) => void;
     }
     interface UiDirectorySegment {
+        /**
+          * Data to be used within the expansion panel.
+          * @type {string | null}
+          * @default null
+         */
+        "data"?: string | null;
         /**
           * A unique identifier for the segment.
           * @type {string}

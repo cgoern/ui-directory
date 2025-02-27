@@ -1,4 +1,5 @@
-import { Component, Host, Element, Prop, State, Watch, h } from '@stencil/core'
+import { Component, Host, Element, Prop, State, Watch, Event, EventEmitter, h } from '@stencil/core'
+import type { UiDirectoryCollectionChangeEventData } from './../../types'
 
 interface MarksObservable {
   preceding: HTMLDivElement
@@ -98,6 +99,12 @@ export class UiDirectoryCollection {
   @State() segmentActive: HTMLUiDirectorySegmentElement
 
   /**
+   * Event emitted when the active segment changes.
+   * @type {UiDirectoryCollectionChangeEventData}
+   */
+  @Event() uiDirectoryCollectionSegmentChange!: EventEmitter<UiDirectoryCollectionChangeEventData>
+
+  /**
    * Watcher for changes to the active segment.
    *
    * @param {HTMLUiDirectorySegmentElement} segmentNew - The new active segment.
@@ -107,10 +114,15 @@ export class UiDirectoryCollection {
   @Watch('segmentActive')
   async watchSegmentActive(
     segmentNew: HTMLUiDirectorySegmentElement,
-    segmentOld: HTMLUiDirectorySegmentElement,
+    segmentOld?: HTMLUiDirectorySegmentElement,
   ): Promise<void> {
     try {
+      const segmentNewData = await segmentNew.getData()
+      let segmentOldData = null
+
       if (segmentOld) {
+        segmentOldData = await segmentNew.getData()
+
         await segmentOld.deactivate()
         await segmentNew.activate()
 
@@ -123,6 +135,22 @@ export class UiDirectoryCollection {
           })
         })
       }
+
+      const eventData: UiDirectoryCollectionChangeEventData = {
+        segmentActive: {
+          element: segmentNew,
+          data: segmentNewData,
+        },
+      }
+
+      if (segmentOld) {
+        eventData.segmentPrevious = {
+          element: segmentOld,
+          data: segmentOldData,
+        }
+      }
+
+      this.uiDirectoryCollectionSegmentChange.emit(eventData)
     } catch (error) {
       console.error('Error setting segments:', error)
     }

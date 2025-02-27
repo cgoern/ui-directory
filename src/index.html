@@ -146,7 +146,7 @@
   </head>
   <body>
     <ui-directory-collection align-x="start">
-      <ui-directory-segment mark="Segment 1">
+      <ui-directory-segment mark="Segment 1" data='{"product": 1, "name": "Product Name 1"}'>
         <div class="header"></div>
         <h2>Iure id sunt inventore</h2>
         <p>
@@ -155,7 +155,7 @@
           vel vitae alias nesciunt enim quaerat.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 2">
+      <ui-directory-segment mark="Segment 2" data='{"product": 2, "name": "Product Name 2"}'>
         <div class="header"></div>
         <h2>Reiciendis architecto</h2>
         <p>
@@ -163,7 +163,7 @@
           debitis. Ut voluptate id aut dolorum.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 3">
+      <ui-directory-segment mark="Segment 3" data='{"product": 3, "name": "Product Name 3"}'>
         <div class="header"></div>
         <h2>Sunt consequatur suscipit</h2>
         <p>
@@ -172,7 +172,7 @@
           praesentium adipisci. Officiis itaque sed dolorem.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 4">
+      <ui-directory-segment mark="Segment 4" data='{"product": 4, "name": "Product Name 4"}'>
         <div class="header"></div>
         <h2>Exercitationem perferendis</h2>
         <p>
@@ -182,7 +182,7 @@
           cum ullam doloremque neque.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 5">
+      <ui-directory-segment mark="Segment 5" data='{"product": 5, "name": "Product Name 5"}'>
         <div class="header"></div>
         <h2>Consequatur corporis ut</h2>
         <p>
@@ -190,7 +190,7 @@
           aut reiciendis atque. Aspernatur aut nobis ab. Ut voluptatem et optio sint corporis.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 6">
+      <ui-directory-segment mark="Segment 6" data='{"product": 6, "name": "Product Name 6"}'>
         <div class="header"></div>
         <h2>Iure id sunt inventore</h2>
         <p>
@@ -199,7 +199,7 @@
           vel vitae alias nesciunt enim quaerat.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 7">
+      <ui-directory-segment mark="Segment 7" data='{"product": 7, "name": "Product Name 7"}'>
         <div class="header"></div>
         <h2>Reiciendis architecto</h2>
         <p>
@@ -207,7 +207,7 @@
           debitis. Ut voluptate id aut dolorum.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 8">
+      <ui-directory-segment mark="Segment 8" data='{"product": 8, "name": "Product Name 8"}'>
         <div class="header"></div>
         <h2>Sunt consequatur suscipit</h2>
         <p>
@@ -216,7 +216,7 @@
           praesentium adipisci. Officiis itaque sed dolorem.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 9">
+      <ui-directory-segment mark="Segment 9" data='{"product": 9, "name": "Product Name 9"}'>
         <div class="header"></div>
         <h2>Exercitationem perferendis</h2>
         <p>
@@ -226,7 +226,7 @@
           cum ullam doloremque neque.
         </p>
       </ui-directory-segment>
-      <ui-directory-segment mark="Segment 10">
+      <ui-directory-segment mark="Segment 10" data='{"product": 10, "name": "Product Name 10"}'>
         <div class="header"></div>
         <h2>Consequatur corporis ut</h2>
         <p>
@@ -235,5 +235,17 @@
         </p>
       </ui-directory-segment>
     </ui-directory-collection>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        await customElements.whenDefined('ui-directory-collection')
+        const uiDirectoryCollections = document.querySelectorAll('ui-directory-collection')
+
+        uiDirectoryCollections.forEach((collection) => {
+          collection.addEventListener('uiDirectoryCollectionSegmentChange', (event) => {
+            console.log('Segments:', event.detail)
+          })
+        })
+      })
+    </script>
   </body>
 </html>
