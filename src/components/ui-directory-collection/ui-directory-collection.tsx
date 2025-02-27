@@ -121,7 +121,7 @@ export class UiDirectoryCollection {
       let segmentOldData = null
 
       if (segmentOld) {
-        segmentOldData = await segmentNew.getData()
+        segmentOldData = await segmentOld.getData()
 
         await segmentOld.deactivate()
         await segmentNew.activate()
