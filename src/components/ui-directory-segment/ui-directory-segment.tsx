@@ -68,16 +68,30 @@ export class UiDirectorySegment {
   }
 
   /**
+   * Parses the provided JSON string data.
+   */
+  private parseData(data: string | null): void {
+    if (data) {
+      try {
+        this._data = JSON.parse(data)
+      } catch (error) {
+        console.warn(`Failed to parse data for segment ${this.mark}:`, error)
+        this._data = null
+      }
+    } else {
+      this._data = null
+    }
+  }
+
+  /**
    * Lifecycle method that is called once before the component loads.
    */
   componentWillLoad() {
-    if (this.data) {
-      try {
-        this._data = JSON.parse(this.data)
-      } catch (error) {
-        console.warn('Failed to parse data:', error)
-      }
+    if (!this.mark) {
+      console.error('The "mark" property is required for ui-directory-segment')
     }
+
+    this.parseData(this.data)
   }
 
   /**
@@ -85,7 +99,11 @@ export class UiDirectorySegment {
    */
   render() {
     return (
-      <Host class={this.active ? 'active' : ''}>
+      <Host
+        class={this.active ? 'active' : ''}
+        role="tab"
+        aria-selected={this.active ? 'true' : 'false'}
+      >
         <slot />
       </Host>
     )
